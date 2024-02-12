@@ -1,5 +1,5 @@
-# KLogger
-> KLogger is a lightweight JavaScript library designed for efficient and visually appealing logging. It offers developers the ability to produce logs, utilizing distinct colors to represent different log levels for improved readability and comprehension.
+# RKLogger
+> RKLogger is a lightweight JavaScript library designed for efficient and visually appealing logging. It offers developers the ability to produce logs, utilizing distinct colors to represent different log levels for improved readability and comprehension.
 
 ### Usage
 ```shell
@@ -17,7 +17,7 @@ printInfo('This is a INFO log output');
 
 ### .env Support
 
-In the .env file of the project, the following parameters can be configured to customize KLogger, or no settings can be made at all. By default, KLogger will operate in the UTC time zone, format timestamps using en-US, and print all DEBUG messages.
+In the .env file of the project, the following parameters can be configured to customize RKLogger, or no settings can be made at all. By default, RKLogger will operate in the UTC time zone, format timestamps using en-US, and print all DEBUG messages.
 ```dotenv
 # CONSOLE OPTION
 PRINT_DEBUG=true
