@@ -1,6 +1,12 @@
 # RKLogger
 > RKLogger is a lightweight JavaScript library designed for efficient and visually appealing logging. It offers developers the ability to produce logs, utilizing distinct colors to represent different log levels for improved readability and comprehension.
 
+![License](https://img.shields.io/github/license/RaistlinTAO/RKlogger)
+![npm](https://img.shields.io/npm/v/:rklogger)
+![npm2](https://img.shields.io/bundlephobia/min/rklogger)
+
+
+
 ### Usage
 ```shell
 printFatal('This is a FATAL log output');
