@@ -1,0 +1,16 @@
+{
+  "name": "klogger",
+  "version": "1.0.0",
+  "description": "KLogger is a lightweight JavaScript library designed for efficient and visually appealing logging. It offers developers the ability to produce logs, utilizing distinct colors to represent different log levels for improved readability and comprehension.",
+  "main": "logger.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {},
+  "scripts": {
+    "test": "node test/test.js"
+  },
+  "keywords": ["Log", "Debug", "Server Output"],
+  "author": "Raistlin TAO <demonvk@gmail.com> (https://github.com/RaistlinTAO)",
+  "license": "ISC"
+}
