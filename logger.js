@@ -1,78 +1,64 @@
-"use strict"
+"use strict";
 
+/**
+ * Retrieves the stack trace of the caller function if enabled.
+ */
 function getStack() {
-    if (process.env.PRINT_STACK_DETAIL ? process.env.PRINT_STACK_DETAIL.toUpperCase() === 'TRUE' : true) {
+    if (process.env.PRINT_STACK_DETAIL?.toUpperCase() !== 'FALSE') {
         console.log(new Error().stack.split('\n')[3]);
     }
 }
 
 /**
- * Print General Message
- * @param message
+ * Generates a timestamp based on environment settings.
+ * @returns {string} Formatted timestamp.
  */
-const printGeneral = (message) => {
-    console.log(new Date().toLocaleString(process.env.CONSOLE_LOCALE || 'en-US', {timeZone: process.env.CONSOLE_TIMEZONE || 'UTC'}) + ' [GENE] ' + '\x1b[34m%s\x1b[0m', message);
-    getStack();
-};
+const getTimestamp = () => {
+    const now = new Date();
+    const locale = process.env.CONSOLE_LOCALE || 'en-US';
+    const timeZone = process.env.CONSOLE_TIMEZONE || 'UTC';
 
-/**
- * Print Info Message
- * @param message
- */
-const printInfo = (message) => {
-    console.log(new Date().toLocaleString(process.env.CONSOLE_LOCALE || 'en-US', {timeZone: process.env.CONSOLE_TIMEZONE || 'UTC'}) + ' [INFO] ' + '\x1b[36m%s\x1b[0m', message);
-    getStack();
-};
-
-/**
- * Print Trace Message
- * @param message
- */
-const printTrace = (message) => {
-    console.log(new Date().toLocaleString(process.env.CONSOLE_LOCALE || 'en-US', {timeZone: process.env.CONSOLE_TIMEZONE || 'UTC'}) + ' [TRAC] ' + '\x1b[37m%s\x1b[0m', message);
-    getStack();
-};
-
-/**
- * Print Debug Message
- * @param message
- */
-const printDebug = (message) => {
-    if (process.env.PRINT_DEBUG ? process.env.PRINT_DEBUG.toUpperCase() === 'TRUE' : true) {
-        console.log(new Date().toLocaleString(process.env.CONSOLE_LOCALE || 'en-US', {timeZone: process.env.CONSOLE_TIMEZONE || 'UTC'}) + ' [DEBG] ' + '\x1b[32m%s\x1b[0m', message);
+    if (process.env.SUPPORT_MILLISECONDS) {
+        return new Intl.DateTimeFormat(locale, {
+            timeZone,
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            fractionalSecondDigits: 3,
+            hour12: false
+        }).format(now).replace(',', '');
     }
-    getStack();
+
+    return now.toLocaleString(locale, { timeZone });
 };
 
 /**
- * Print Warning Message
- * @param message
+ * Logs messages with different severity levels and optional objects.
+ * @param {string} level - The log level identifier.
+ * @param {string} colorCode - ANSI color code for formatting.
+ * @param {string} message - The log message.
+ * @param {object} [object] - Optional additional data.
  */
-const printWarning = (message) => {
-    console.log(new Date().toLocaleString(process.env.CONSOLE_LOCALE || 'en-US', {timeZone: process.env.CONSOLE_TIMEZONE || 'UTC'}) + ' [WARN] ' + '\x1b[35m%s\x1b[0m', message);
-    getStack();
-};
-
-/**
- * Print Error Message
- * @param message
- */
-const printError = (message) => {
-    console.log(new Date().toLocaleString(process.env.CONSOLE_LOCALE || 'en-US', {timeZone: process.env.CONSOLE_TIMEZONE || 'UTC'}) + ' [ERRO] ' + '\x1b[31m%s\x1b[0m', message);
-    getStack();
-};
-
-/**
- * Print Fatal Message
- * @param message
- */
-const printFatal = (message) => {
-    console.log(new Date().toLocaleString(process.env.CONSOLE_LOCALE || 'en-US', {timeZone: process.env.CONSOLE_TIMEZONE || 'UTC'}) + ' [FATL] ' + '\x1b[5m%s\x1b[0m', message);
+const logMessage = (level, colorCode, message, object) => {
+    console.log(`${getTimestamp()} [${level}] ${colorCode}%s\x1b[0m`, message, object ? ` ${JSON.stringify(object, null, 2)}` : '');
     getStack();
 };
 
 const Logger = {
-    printGeneral, printInfo, printTrace, printDebug, printWarning, printError, printFatal
+    printGeneral: (message, object) => logMessage('GENE', '\x1b[34m', message, object),
+    printInfo: (message, object) => logMessage('INFO', '\x1b[36m', message, object),
+    printTrace: (message, object) => logMessage('TRAC', '\x1b[37m', message, object),
+    printDebug: (message, object) => {
+        if (process.env.PRINT_DEBUG?.toUpperCase() !== 'FALSE') {
+            logMessage('DEBG', '\x1b[32m', message, object);
+        }
+    },
+    printWarning: (message, object) => logMessage('WARN', '\x1b[35m', message, object),
+    printError: (message, object) => logMessage('ERRO', '\x1b[31m', message, object),
+    printFatal: (message, object) => logMessage('FATL', '\x1b[5m', message, object)
 };
 
-module.exports = Logger
+export default Logger;

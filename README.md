@@ -4,6 +4,14 @@
 ![License](https://img.shields.io/github/license/RaistlinTAO/RKlogger)
 ![npm](https://img.shields.io/npm/v/rklogger)
 
+## Features
+
+- Supports different log levels: General, Info, Trace, Debug, Warning, Error, and Fatal.
+- Color-coded console output for easy readability.
+- Configurable stack trace logging.
+- Supports timestamp formatting with optional milliseconds.
+- Reads configuration from environment variables.
+
 ### Install
 ```
 npm i rklogger
@@ -11,7 +19,7 @@ npm i rklogger
 
 ### Usage
 ```shell
-printFatal('This is a FATAL log output');
+printFatal('This is a FATAL log output', [object]);
 printError('This is a ERROR log output');
 printWarning('This is an WARNING log output');
 printDebug('This is a DEBUG log output');
@@ -32,4 +40,5 @@ PRINT_DEBUG=true
 PRINT_STACK_DETAIL=true
 CONSOLE_LOCALE='en-GB'
 CONSOLE_TIMEZONE='Australia/Melbourne'
+SUPPORT_MILLISECONDS=true
 ```
