@@ -5,7 +5,7 @@
  */
 function getStack() {
     if (process.env.PRINT_STACK_DETAIL?.toUpperCase() !== 'FALSE') {
-        console.log(new Error().stack.split('\n')[3]);
+        console.log(new Error().stack.split('\n')[4]);
     }
 }
 
